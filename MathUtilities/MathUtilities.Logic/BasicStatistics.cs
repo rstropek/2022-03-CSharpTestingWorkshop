@@ -1,13 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MathUtilities.Logic
+﻿namespace MathUtilities.Logic
 {
     public class BasicStatistics
     {
+        private readonly INumbersReader reader;
+
+        public BasicStatistics(INumbersReader reader)
+        {
+            this.reader = reader;
+        }
+
         public int SumOfNumbers(IEnumerable<int> numbers)
         {
             var sum = 0;
@@ -21,9 +22,8 @@ namespace MathUtilities.Logic
             // return numbers.Sum();
         }
 
-        public int SumOfNumbersFromFile()
+        public int SumOfNumbersFromReader()
         {
-            var reader = new NumbersReader();
             return SumOfNumbers(reader.ReadNumbers());
         }
     }

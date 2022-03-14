@@ -1,6 +1,14 @@
-﻿namespace MathUtilities.Logic
+﻿using System.Runtime.CompilerServices;
+[assembly: InternalsVisibleTo("MathUtilities.Tests")]
+
+namespace MathUtilities.Logic
 {
-    public class NumbersReader
+    public interface INumbersReader
+    {
+        IEnumerable<int> ReadNumbers();
+    }
+
+    internal class NumbersFromFileReader : INumbersReader
     {
         public IEnumerable<int> ReadNumbers()
         {
