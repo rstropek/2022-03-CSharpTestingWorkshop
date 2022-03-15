@@ -1,5 +1,6 @@
 ﻿var myNumbers = GetNumbersBetter();
-var filteredNumbers = RemoveOddNumbersBetter(myNumbers);
+//var filteredNumbers = RemoveOddNumbersBetter(myNumbers);
+var filteredNumbers = myNumbers.Where(number => number % 2 == 0);
 foreach(var number in filteredNumbers)
 {
     Console.WriteLine(number);
