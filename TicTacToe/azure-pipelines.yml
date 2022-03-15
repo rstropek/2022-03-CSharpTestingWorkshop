@@ -1,0 +1,48 @@
+# ASP.NET Core
+# Build and test ASP.NET Core projects targeting .NET Core.
+# Add steps that run tests, create a NuGet package, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
+
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+variables:
+  buildConfiguration: 'Release'
+
+steps:
+- task: UseDotNet@2
+  displayName: ⚙️ Setup correct .NET Version
+  inputs:
+    version: '6.0.x'
+    includePreviewVersions: true
+- task: DotNetCoreCLI@2
+  displayName: 🎁 Restore packages
+  inputs:
+    command: 'restore'
+    projects: |
+      TicTacToe/TicTacToe.Logic/TicTacToe.Logic.csproj
+      TicTacToe/TicTacToe.Tests/TicTacToe.Tests.csproj
+- task: DotNetCoreCLI@2
+  displayName: 💪 Build code
+  inputs:
+    command: 'build'
+    arguments: '--configuration $(buildConfiguration)'
+    projects: |
+      TicTacToe/TicTacToe.Logic/TicTacToe.Logic.csproj
+      TicTacToe/TicTacToe.Tests/TicTacToe.Tests.csproj
+- task: DotNetCoreCLI@2
+  displayName: 🧪 Run tests
+  inputs:
+    command: 'test'
+    arguments: '--configuration $(buildConfiguration) --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=cobertura'
+    publishTestResults: true
+    projects: |
+      TicTacToe/TicTacToe.Tests/TicTacToe.Tests.csproj
+- task: PublishCodeCoverageResults@1
+  displayName: 🧪 Publish code coverage report
+  inputs:
+    codeCoverageTool: 'Cobertura'
+    summaryFileLocation: '$(Agent.TempDirectory)/**/coverage.cobertura.xml'
