@@ -29,5 +29,21 @@ namespace MathUtilities.Logic.Tests
             var result = BasicStatistics.SumOfNumbers(new List<int> { });
             Assert.Equal(0, result);
         }
+
+        [Fact]
+        public void SumOfNumbersFromReader()
+        {
+            var result = BasicStatistics.SumOfNumbersFromReader("testfile.txt", new NumbersReaderMock());
+            Assert.Equal(6, result);
+        }
+
+        private class NumbersReaderMock : INumbersReader
+        {
+            public IEnumerable<int> ReadNumbersFromFile(string filePath)
+            {
+                Assert.Equal("testfile.txt", filePath);
+                return new[] { 1, 2, 3 };
+            }
+        }
     }
 }

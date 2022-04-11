@@ -24,4 +24,10 @@
     <ProjectReference Include="..\MathUtilities.Logic\MathUtilities.Logic.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="numbers.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

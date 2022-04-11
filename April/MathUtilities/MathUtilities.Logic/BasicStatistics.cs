@@ -18,5 +18,10 @@ namespace MathUtilities.Logic
 
             return sum;
         }
+
+        public static int SumOfNumbersFromReader(string filePath, INumbersReader reader)
+        {
+            return SumOfNumbers(reader.ReadNumbersFromFile(filePath));
+        }
     }
 }
