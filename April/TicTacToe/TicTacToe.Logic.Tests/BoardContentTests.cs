@@ -67,5 +67,23 @@ namespace TicTacToe.Logic.Tests
                 "other",
                 () => new BoardContent(new byte[] { 0, 0, 0, 0, 0, 0, 0, 0, 42 }));
         }
+
+        [Theory]
+        [InlineData(-1, 0, "col")]
+        [InlineData(3, 0, "col")]
+        [InlineData(0, -1, "row")]
+        [InlineData(0, 3, "row")]
+        public void CalculateIndexInvalidColumn(int col, int row, string paramName)
+        {
+            Assert.Throws<ArgumentOutOfRangeException>(
+                paramName,
+                () => BoardContent.CalculateIndex(col, row));
+        }
+
+        [Fact]
+        public void CalculateIndexCorrectly()
+        {
+            Assert.Equal(4, BoardContent.CalculateIndex(1, 1));
+        }
     }
 }
