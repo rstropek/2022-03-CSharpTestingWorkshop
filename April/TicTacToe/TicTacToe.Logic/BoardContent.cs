@@ -9,7 +9,19 @@ using System.Threading.Tasks;
 
 namespace TicTacToe.Logic
 {
-    public class BoardContent
+    public interface IBoardContent
+    {
+        /// <summary>
+        /// Gets a copy of the content of the board
+        /// </summary>
+        byte[] Content { get; }
+        
+        bool HasEmptySquares { get; }
+        byte Get(int col, int row);
+        void Set(int col, int row, byte squareContent);
+    }
+
+    public class BoardContent : IBoardContent
     {
         /// <summary>
         /// Length of a side of our board
@@ -56,9 +68,6 @@ namespace TicTacToe.Logic
             other.CopyTo(content, 0);
         }
 
-        /// <summary>
-        /// Gets a copy of the content of the board
-        /// </summary>
         public byte[] Content => content.ToArray();
 
         public bool HasEmptySquares => 
