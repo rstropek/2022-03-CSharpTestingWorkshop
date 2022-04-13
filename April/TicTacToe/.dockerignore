@@ -1,0 +1,8 @@
+.vs
+.vscode
+TestResults
+bin
+obj
+azure-piplines.yml
+Dockerfile
+.dockerignore
