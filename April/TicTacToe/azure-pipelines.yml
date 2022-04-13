@@ -1,0 +1,36 @@
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- task: UseDotNet@2
+  displayName: ⚙️ Setup correct .NET version
+  inputs:
+    version: '6.0.x'
+
+- task: DotNetCoreCLI@2
+  displayName: 🎁 Restore NuGet packages
+  inputs:
+    command: 'restore'
+
+- task: DotNetCoreCLI@2
+  displayName: 🏗️ Build the code
+  inputs:
+    command: build
+    projects: '**/*.csproj'
+
+- task: DotNetCoreCLI@2
+  displayName: 🧪 Test TicTacToe
+  inputs:
+    command: 'test'
+    arguments: '--collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=cobertura'
+    publishTestResults: true
+    projects: 'TicTacToe.Logic.Tests' # update with your test project directory
+  
+- task: PublishCodeCoverageResults@1
+  displayName: 💌 Publish code coverage report
+  inputs:
+    codeCoverageTool: 'Cobertura'
+    summaryFileLocation: '$(Agent.TempDirectory)/**/coverage.cobertura.xml'
